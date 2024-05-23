@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: config1
+
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: pers.sharding.dao.domain
+  configuration:
+    map-underscore-to-camel-case: true

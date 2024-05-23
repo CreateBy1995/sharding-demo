@@ -1,0 +1,47 @@
+# 读写分离配置
+spring:
+  shardingsphere:
+    props:
+      # 展示实际执行的sql
+      sql-show: true
+    datasource:
+      # 定义数据源
+      names: ds0,ds0-slave0,ds0-slave1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: root
+        password: sunshine
+      ds0-slave0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/sharding_0_slave?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: root
+        password: sunshine
+      ds0-slave1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/sharding_0_slave_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: root
+        password: sunshine
+    rules:
+      # 读写分离配置
+      readwrite-splitting:
+        load-balancers:
+          # 定义负载均器 custom-order 此处使用自定义的算法 custom-o
+          custom-order:
+            type: custom-o
+           # 定义负载均器 random-order  此处使用内置的的算法 random
+          random-order:
+            type: random
+        data-sources:
+          ds-order:
+            write-data-source-name: ds0
+            read-data-source-names:
+              - ds0-slave0
+              - ds0-slave1
+            # 指定使用的负载均衡器
+            load-balancer-name: random-order
+
+
