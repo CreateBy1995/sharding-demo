@@ -7,3 +7,5 @@ mybatis:
   typeAliasesPackage: pers.sharding.dao.domain
   configuration:
     map-underscore-to-camel-case: true
+
+mysqlUrl: 121.40.24.147
