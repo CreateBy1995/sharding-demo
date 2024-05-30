@@ -41,18 +41,27 @@ spring:
             # 数据节点配置
             actual-data-nodes: ds0.users_${[0,2]},ds1.users_${[1,3]}
             database-strategy:
-#              standard:
-              inline:
+              standard:
+#              inline:
                 # 分片键
                 sharding-column: id
                 # 上面定义的分库算法
                 sharding-algorithm-name: custom-sharding-db
             table-strategy:
-#              standard:
-              inline:
+              standard:
+#              inline:
                 # 分片键
                 sharding-column: id
                 # 上面定义的分表算法
                 sharding-algorithm-name: custom-sharding-table
 
 
+pro:
+  test: sdfd
+  proSubConfig:
+    proSubSubConfig3:
+      name: sss
+      age: gdg
+    proSubSubConfig1:
+      name: sss
+      age: gdg

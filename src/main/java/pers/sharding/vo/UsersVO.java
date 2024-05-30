@@ -1,9 +1,6 @@
 package pers.sharding.vo;
 
 import lombok.Data;
-import pers.sharding.dao.domain.Order;
-import pers.sharding.dao.domain.Users;
-import pers.sharding.util.ReflectionUtil;
 
 /**
  * @Author: dongcx
@@ -13,6 +10,6 @@ import pers.sharding.util.ReflectionUtil;
 @Data
 public class UsersVO {
     private Long id;
-    private Long userId;
+    private Long name;
 
 }
