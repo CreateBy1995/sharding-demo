@@ -23,21 +23,4 @@ public class ReflectionUtil {
         }
         return targetInstance;
     }
-
-    public static <T> List<T> convertList(List<Object> source, Class<T> targetClass) {
-        Assert.notNull(source, "source can't be null ");
-        Assert.notNull(targetClass, "targetClass can't be null ");
-        List<T> targetList = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            T targetInstance = null;
-            try {
-                targetInstance = targetClass.newInstance();
-                BeanUtils.copyProperties(source, targetInstance);
-                targetList.add(targetInstance);
-            } catch (InstantiationException | IllegalAccessException e) {
-                log.error("convert failed, targetClass:{}, source:{}", targetClass, source);
-            }
-        }
-        return targetList;
-    }
 }
