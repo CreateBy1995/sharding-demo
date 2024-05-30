@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.sharding.dao.mapper.UsersMapper">
+
+
+    <select id="listByIds" resultType="pers.sharding.dao.domain.Users">
+        SELECT * FROM users WHERE id  in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
+
+<!--    <insert id="create" parameterType="pers.sharding.dao.domain.Users">-->
+<!--        INSERT INTO orders(user_id) VALUES (#{userId})-->
+<!--    </insert>-->
+
+</mapper>
