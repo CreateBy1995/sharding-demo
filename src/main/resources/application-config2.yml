@@ -1,28 +1,6 @@
 # 数据分片配置
 spring:
   shardingsphere:
-#    rules:
-#      sharding:
-#        sharding-algorithms:
-#          database_inline:
-#            props:
-#              algorithm-expression: ds${id%2}
-#            type: INLINE
-#          table_inline:
-#            props:
-#              algorithm-expression: users${id%4}
-#            type: INLINE
-#        tables:
-#          t_order:
-#            actual-data-nodes: ds$->{0..1}.users->{0..1}
-#            database-strategy:
-#              standard:
-#                sharding-algorithm-name: database_inline
-#                sharding-column: id
-#            table-strategy:
-#              standard:
-#                sharding-algorithm-name: table_inline
-#                sharding-column: id
     props:
       # 展示实际执行的sql
       sql-show: true
@@ -63,15 +41,15 @@ spring:
             # 数据节点配置
             actual-data-nodes: ds0.users_${[0,2]},ds1.users_${[1,3]}
             database-strategy:
-              standard:
-#              inline:
+#              standard:
+              inline:
                 # 分片键
                 sharding-column: id
                 # 上面定义的分库算法
                 sharding-algorithm-name: custom-sharding-db
             table-strategy:
-              standard:
-#              inline:
+#              standard:
+              inline:
                 # 分片键
                 sharding-column: id
                 # 上面定义的分表算法

@@ -16,7 +16,4 @@ public class OrderVO {
     private Long id;
     private Long userId;
 
-    public static OrderVO convert(Order source) {
-        return ReflectionUtil.convert(source, OrderVO.class);
-    }
 }

@@ -19,4 +19,8 @@ public class UsersService {
         return usersMapper.listByIds(ids);
     }
 
+    public Users getById(Long id){
+        return usersMapper.getById(id);
+    }
+
 }

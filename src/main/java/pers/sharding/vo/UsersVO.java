@@ -15,7 +15,4 @@ public class UsersVO {
     private Long id;
     private Long userId;
 
-    public static UsersVO convert(Users source) {
-        return ReflectionUtil.convert(source, UsersVO.class);
-    }
 }

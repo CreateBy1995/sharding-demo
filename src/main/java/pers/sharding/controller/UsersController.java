@@ -24,6 +24,12 @@ public class UsersController {
 
     @PostMapping("/listByIds")
     public List<UsersVO> listByIds (@RequestBody UsersQueryRO ro) {
-        return usersService.listByIds(ro.getIds()).stream().map(item -> ReflectionUtil.convert(item, UsersVO.class)).collect(Collectors.toList());
+        return ReflectionUtil.convertList(usersService.listByIds(ro.getIds()), UsersVO.class);
+//        return usersService.listByIds(ro.getIds()).stream().map(item -> ReflectionUtil.convert(item, UsersVO.class)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/get/{id}")
+    public UsersVO getById (@PathVariable("id") Long id) {
+        return ReflectionUtil.convert(usersService.getById(id), UsersVO.class);
     }
 }

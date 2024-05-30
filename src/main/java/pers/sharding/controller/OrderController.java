@@ -15,7 +15,7 @@ public class OrderController {
 
     @GetMapping("/get/{id}")
     public OrderVO getOrder(@PathVariable Long id) {
-        return OrderVO.convert(orderService.getOrder(id));
+        return ReflectionUtil.convert(orderService.getOrder(id), OrderVO.class);
     }
     @PostMapping("/create")
     public Integer createOrder(@RequestBody OrderCreateRO ro) {

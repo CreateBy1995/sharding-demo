@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface UsersMapper {
 
-    List<Users> listByIds(@Param("ids") List<Long> id);
+    List<Users> listByIds(@Param("ids") List<Long> ids);
 
-//    int create(Order order);
+    Users getById(@Param("id") Long id);
+
 }

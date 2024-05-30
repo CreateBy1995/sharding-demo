@@ -12,8 +12,9 @@
     </select>
 
 
-<!--    <insert id="create" parameterType="pers.sharding.dao.domain.Users">-->
-<!--        INSERT INTO orders(user_id) VALUES (#{userId})-->
-<!--    </insert>-->
+    <select id="getById" resultType="pers.sharding.dao.domain.Users">
+        SELECT * FROM users WHERE id  = #{id}
+    </select>
+
 
 </mapper>
