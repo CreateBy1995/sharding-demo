@@ -4,6 +4,7 @@ spring:
     props:
       # 展示实际执行的sql
       sql-show: true
+      max-connections-size-per-query: 2
     datasource:
       # 定义数据源
       names: ds0,ds1
