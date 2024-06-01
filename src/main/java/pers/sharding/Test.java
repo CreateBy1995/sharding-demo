@@ -23,6 +23,7 @@
 //import org.apache.shardingsphere.infra.executor.sql.hook.SPISQLExecutionHook;
 //import org.apache.shardingsphere.infra.executor.sql.hook.SQLExecutionHook;
 //import org.apache.shardingsphere.infra.executor.sql.process.ExecuteProcessEngine;
+//import org.apache.shardingsphere.infra.merge.MergeEngine;
 //import org.apache.shardingsphere.infra.merge.result.MergedResult;
 //import org.apache.shardingsphere.infra.metadata.ShardingSphereMetaData;
 //import org.apache.shardingsphere.infra.rewrite.context.SQLRewriteContext;
@@ -114,12 +115,13 @@
 //            // 对sql进行分组, 也就是
 //            List<List<SQLUnit>> sqlUnitGroups = group(sqlUnits);
 //            // 判断当前模型  如果当前要执行的sql数 小于max-connections-size-per-query(每个查询的最大连接数) , 那么就是连接限制模式 否则为内存限制模式
+//            // 此处连接模型的实现与官网给出的文档有不一致，不确定是个人理解错误还是官网文档没及时更新？
 //            ConnectionMode connectionMode = maxConnectionsSizePerQuery < sqlUnits.size() ? ConnectionMode.CONNECTION_STRICTLY : ConnectionMode.MEMORY_STRICTLY;
 //            // 为sql分配数据库连接 结构大致为
 //            // [JdbcExecutionUnit(conn1, sql1), JdbcExecutionUnit(conn1, sql2)] 也有可能是conn1和conn2，取决于用户的配置max-connections-size-per-query
-//            // 假设ds0有10条sql, 且max-connections-size-per-query 配置为3 那么 10条sql会被分组为 4、4、2 分别交给3个连接去处理
-//            // 假设ds0有10条sql, 且max-connections-size-per-query 配置为1 那么 10条sql会被分组为 10 分别交给1个连接去处理
-//            // 假设ds0有5条sql, 且max-connections-size-per-query 配置为10 那么 10条sql会被分组为 1、1、1、1、1 分别交给5个连接去处理
+//            // 假设ds0有10条sql, 且max-connections-size-per-query 配置为3 那么 10条sql会被分组为 4、4、2 分别交给3个连接去处理 使用内存限制模式
+//            // 假设ds0有10条sql, 且max-connections-size-per-query 配置为1 那么 10条sql会被分组为 10 分别交给1个连接去处理 使用连接限制模式
+//            // 假设ds0有5条sql, 且max-connections-size-per-query 配置为10 那么 10条sql会被分组为 1、1、1、1、1 分别交给5个连接去处理  使用内存限制模式
 //            result.addAll(group(dataSourceName, sqlUnitGroups, connectionMode));
 //        }
 //        // 装饰器模式，通过SPI的形式去实现 实现ExecutionPrepareDecorator接口
@@ -177,14 +179,27 @@
 //    }
 //
 //    public ResultSet getResultSet() throws SQLException {
+//        // 正常一条sql执行完之后会返回一个ResultSet，通过ResultSet的next方法遍历数据以及getvalue方法去获取数据列
+//        // 但是集成了shardingjdbc之后 一条逻辑sql实际可能映射为多条物理sql
+//        // 所以在此处sharding需要对这多条sql进行归并对外返回一个ShardingSphereResultSet
 //        if (null != currentResultSet) {
 //            return currentResultSet;
 //        }
 //        if (executionContext.getSqlStatementContext() instanceof SelectStatementContext || executionContext.getSqlStatementContext().getSqlStatement() instanceof DALStatement) {
 //            List<ResultSet> resultSets = getResultSets();
+//            // 对于使用了 ORDER BY 语句，sharding使用的是流式归并排序，由于在 SQL 中存在 ORDER BY 语句，因此每个数据结果集自身是有序的，因此只需要将数据结果集当前游标指向的数据值进行排序即可。 这相当于对多个有序的数组进行排序
+//            // https://shardingsphere.apache.org/document/5.0.0/cn/reference/sharding/merge/ 参考此处的归并排序图解
+//            // 也就是说此处的排序只是先将结果集的当前游标进行一个排序，后续在遍历数据的过程中再不断进行排序
 //            MergedResult mergedResult = mergeQuery(getQueryResults(resultSets));
 //            currentResultSet = new ShardingSphereResultSet(resultSets, mergedResult, this, executionContext);
 //        }
 //        return currentResultSet;
+//    }
+//
+//    private MergedResult mergeQuery(final List<QueryResult> queryResults) throws SQLException {
+//        ShardingSphereMetaData metaData = metaDataContexts.getMetaData(connection.getSchema());
+//        MergeEngine mergeEngine = new MergeEngine(connection.getSchema(), metaData.getResource().getDatabaseType(), metaData.getSchema(),
+//                metaDataContexts.getProps(), metaData.getRuleMetaData().getRules());
+//        return mergeEngine.merge(queryResults, executionContext.getSqlStatementContext());
 //    }
 //}

@@ -10,6 +10,6 @@ import lombok.Data;
 @Data
 public class UsersVO {
     private Long id;
-    private Long name;
+    private String name;
 
 }

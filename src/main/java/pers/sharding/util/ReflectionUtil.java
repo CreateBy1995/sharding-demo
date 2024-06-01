@@ -32,7 +32,7 @@ public class ReflectionUtil {
             T targetInstance;
             try {
                 targetInstance = targetClass.newInstance();
-                BeanUtils.copyProperties(source, targetInstance);
+                BeanUtils.copyProperties(source.get(i), targetInstance);
                 targetList.add(targetInstance);
             } catch (InstantiationException | IllegalAccessException e) {
                 log.error("convert failed, targetClass:{}, source:{}", targetClass, source);

@@ -4,7 +4,7 @@ spring:
     props:
       # 展示实际执行的sql
       sql-show: true
-      max-connections-size-per-query: 2
+      max-connections-size-per-query: 1
     datasource:
       # 定义数据源
       names: ds0,ds1
@@ -55,14 +55,3 @@ spring:
                 sharding-column: id
                 # 上面定义的分表算法
                 sharding-algorithm-name: custom-sharding-table
-
-
-pro:
-  test: sdfd
-  proSubConfig:
-    proSubSubConfig3:
-      name: sss
-      age: gdg
-    proSubSubConfig1:
-      name: sss
-      age: gdg
