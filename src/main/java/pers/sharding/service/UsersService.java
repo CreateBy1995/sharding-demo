@@ -19,6 +19,10 @@ public class UsersService {
         return usersMapper.listByIds(ids);
     }
 
+    public Users getByIdAndName(Long id, String name){
+        return usersMapper.getByIdAndName(id, name);
+    }
+
     public Users getById(Long id){
         return usersMapper.getById(id);
     }

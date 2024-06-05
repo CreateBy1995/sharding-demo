@@ -24,19 +24,10 @@ public class ReflectionUtil {
         return targetInstance;
     }
 
-    public static <T, R> List<T> convertList(List<R> source, Class<T> targetClass) {
-        Assert.notNull(source, "source can't be null ");
-        Assert.notNull(targetClass, "targetClass can't be null ");
+    public static <T, R> List<T> convertList(List<R> sourceList, Class<T> targetClass) {
         List<T> targetList = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            T targetInstance;
-            try {
-                targetInstance = targetClass.newInstance();
-                BeanUtils.copyProperties(source.get(i), targetInstance);
-                targetList.add(targetInstance);
-            } catch (InstantiationException | IllegalAccessException e) {
-                log.error("convert failed, targetClass:{}, source:{}", targetClass, source);
-            }
+        for (R source : sourceList) {
+            targetList.add(convert(source, targetClass));
         }
         return targetList;
     }
