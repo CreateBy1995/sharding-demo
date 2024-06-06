@@ -11,6 +11,8 @@ public interface UsersMapper {
 
     List<Users> listByIds(@Param("ids") List<Long> ids);
 
+    Users getByIdAndName(@Param("id") Long id, @Param("name") String name);
+
     Users getById(@Param("id") Long id);
 
 }
