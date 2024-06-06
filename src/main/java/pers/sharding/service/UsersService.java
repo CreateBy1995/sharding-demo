@@ -1,13 +1,9 @@
 package pers.sharding.service;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pers.sharding.dao.domain.Order;
 import pers.sharding.dao.domain.Users;
-import pers.sharding.dao.mapper.OrderMapper;
 import pers.sharding.dao.mapper.UsersMapper;
-import pers.sharding.ro.OrderCreateRO;
 
 import java.util.List;
 
@@ -19,6 +15,18 @@ public class UsersService {
         return usersMapper.listByIds(ids);
     }
 
+    public List<Users> pageByIds(List<Long> ids, Integer offset, Integer limit){
+        // 测试获取连接死锁问题
+//        new Thread(()->{
+//            usersMapper.pageByIds(ids, offset, limit);
+//        }).start();
+//        try {
+//            TimeUnit.MILLISECONDS.sleep(500);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        return usersMapper.pageByIds(ids, offset, limit);
+    }
     public Users getByIdAndName(Long id, String name){
         return usersMapper.getByIdAndName(id, name);
     }

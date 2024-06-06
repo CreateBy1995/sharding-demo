@@ -1,8 +1,6 @@
 package pers.sharding.dao.mapper;
 
-import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Param;
-import pers.sharding.dao.domain.Order;
 import pers.sharding.dao.domain.Users;
 
 import java.util.List;
@@ -10,6 +8,8 @@ import java.util.List;
 public interface UsersMapper {
 
     List<Users> listByIds(@Param("ids") List<Long> ids);
+
+    List<Users> pageByIds(@Param("ids") List<Long> ids, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     Users getByIdAndName(@Param("id") Long id, @Param("name") String name);
 

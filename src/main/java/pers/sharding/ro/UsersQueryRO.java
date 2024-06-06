@@ -7,4 +7,6 @@ import java.util.List;
 @Data
 public class UsersQueryRO {
     private List<Long> ids;
+    private Integer offset;
+    private Integer limit;
 }

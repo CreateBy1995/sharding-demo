@@ -11,6 +11,14 @@
 
     </select>
 
+    <select id="pageByIds" resultType="pers.sharding.dao.domain.Users">
+        SELECT * FROM users WHERE id  in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        limit #{offset}, #{limit}
+    </select>
+
     <select id="getByIdAndName" resultType="pers.sharding.dao.domain.Users">
         SELECT * FROM users WHERE id  = #{id} and name = #{name}
     </select>
