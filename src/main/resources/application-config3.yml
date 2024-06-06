@@ -1,3 +1,4 @@
+# 禁用sharding
 spring:
   shardingsphere:
     enabled: false
