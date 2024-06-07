@@ -37,8 +37,8 @@ spring:
           # 自定义的分表算法
           custom-sharding-table:
             props:
-              # 根据入参id取模   分表算法 users_$->{id >> 1 % 4}
-              algorithm-expression: users_$->{id >> 1 % 4}
+              # 根据入参id取模   分表算法
+              algorithm-expression: users_$->{(id >> 1) % 4}
             type: INLINE
         tables:
           users:

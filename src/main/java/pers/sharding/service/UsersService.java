@@ -15,6 +15,12 @@ public class UsersService {
         return usersMapper.listByIds(ids);
     }
 
+    public List<Users> listByIdAndName(List<Long> ids, List<String> names){
+        return usersMapper.listByIdAndName(ids, names);
+    }
+
+
+
     public List<Users> pageByIds(List<Long> ids, Integer offset, Integer limit){
         // 测试获取连接死锁问题
 //        new Thread(()->{

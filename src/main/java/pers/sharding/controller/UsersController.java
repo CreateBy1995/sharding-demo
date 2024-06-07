@@ -20,6 +20,12 @@ public class UsersController {
         return ReflectionUtil.convertList(usersService.listByIds(ro.getIds()), UsersVO.class);
     }
 
+    @PostMapping("/listByIdAndName")
+    public List<UsersVO> listByIdAndName(@RequestBody UsersQueryRO ro) {
+        return ReflectionUtil.convertList(usersService.listByIdAndName(ro.getIds(), ro.getNames()), UsersVO.class);
+    }
+
+
     @PostMapping("/pageByIds")
     public List<UsersVO> pageByIds(@RequestBody UsersQueryRO ro) {
         return ReflectionUtil.convertList(usersService.pageByIds(ro.getIds(), ro.getOffset(), ro.getLimit()), UsersVO.class);
