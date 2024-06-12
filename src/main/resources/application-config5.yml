@@ -1,27 +1,6 @@
 # 数据分片配置 标准分片策略 - 行表达式 - 允许范围查询
 spring:
   shardingsphere:
-    props:
-      # 展示实际执行的sql
-      sql-show: true
-      max-connections-size-per-query: 2
-    datasource:
-      # 定义数据源
-      names: ds0,ds1
-      ds0:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
-      #        maximum-pool-size: 2
-      ds1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
-    #        maximum-pool-size: 2
     rules:
       sharding:
         sharding-algorithms:

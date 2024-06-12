@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: config5
+    active: sharding-base,config5
 
 mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -8,4 +8,3 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-mysqlUrl: 121.40.24.147
