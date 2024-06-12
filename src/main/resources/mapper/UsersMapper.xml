@@ -30,6 +30,17 @@
         </foreach>
     </select>
 
+    <select id="listByIdRange" resultType="pers.sharding.dao.domain.Users">
+        SELECT * FROM users WHERE 1 = 1
+        <if test="min!= null">
+            and id  <![CDATA[ >= ]]> #{min}
+        </if>
+        <if test="max!= null">
+            and id  <![CDATA[ <= ]]> #{max}
+        </if>
+
+    </select>
+
     <select id="getByIdAndName" resultType="pers.sharding.dao.domain.Users">
         SELECT * FROM users WHERE id  = #{id} and name = #{name}
     </select>

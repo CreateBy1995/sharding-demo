@@ -25,6 +25,11 @@ public class UsersController {
         return ReflectionUtil.convertList(usersService.listByIdAndName(ro.getIds(), ro.getNames()), UsersVO.class);
     }
 
+    @GetMapping("/listByIdRange")
+    public List<UsersVO> listByIdRange(Integer min, Integer max) {
+        return ReflectionUtil.convertList(usersService.listByIdRange(min, max), UsersVO.class);
+    }
+
 
     @PostMapping("/pageByIds")
     public List<UsersVO> pageByIds(@RequestBody UsersQueryRO ro) {

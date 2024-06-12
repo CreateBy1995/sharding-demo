@@ -1,4 +1,4 @@
-# 数据分片配置 标准分片策略 - 行表达式 - 允许范围查询
+# 数据分片配置  复杂分片策略&hint策略
 spring:
   shardingsphere:
     props:
@@ -7,60 +7,52 @@ spring:
       max-connections-size-per-query: 2
     datasource:
       # 定义数据源
-      names: ds0,ds1
+      names: ds0
       ds0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
         username: root
         password: sunshine
-#        maximum-pool-size: 2
       ds1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
         username: root
         password: sunshine
-#        maximum-pool-size: 2
     rules:
       sharding:
         sharding-algorithms:
           # 自定义的分库算法
           custom-sharding-db:
             props:
-              # 根据入参id取模  ds$->{id % 2}
-              # 递增id如何保证数据和流量均衡可以参考
-              # https://blog.csdn.net/tianmlin1/article/details/133199048
-              algorithm-expression: ds$->{id % 2}
-              # 允许范围查询，查询会无视分片策略，进行全路由 默认为false
-              allow-range-query-with-inline-sharding: true
-#              algorithm-expression: ds0
-            type: INLINE
+              # 指定查询某个库 在执行查询前通过HintManager.getInstance().setDatabaseShardingValue指定
+              algorithm-expression: $->{value}
+            type: HINT_INLINE
           # 自定义的分表算法
           custom-sharding-table:
             props:
+              sharding-columns: id,order_id
               # 根据入参id取模   分表算法
               allow-range-query-with-inline-sharding: true
-              algorithm-expression: users_$->{(id >> 1) % 4}
-            type: INLINE
+              algorithm-expression: complex_user_$->{(id + order_id) % 2}
+            type: COMPLEX_INLINE
         tables:
-          users:
+          complex_user:
 #            actual-data-nodes: ds$->{0}.users_$->{2,4}
             # 行表达式参考https://shardingsphere.apache.org/document/4.1.1/cn/features/sharding/other-features/inline-expression/
             # 数据节点配置
-#            actual-data-nodes: ds0.users_${[0,1,2]},ds1.users_${[1,3]}
-            actual-data-nodes: ds$->{0..1}.users_$->{0..3}
+            actual-data-nodes: ds$->{0..1}.complex_user_$->{0..1}
             database-strategy:
-              standard:
-#              inline:
+              hint:
                 # 分片键
                 sharding-column: id
                 # 上面定义的分库算法
                 sharding-algorithm-name: custom-sharding-db
             table-strategy:
-              standard:
+              complex:
 #              inline:
                 # 分片键
-                sharding-column: id
+                sharding-columns: id,order_id
                 # 上面定义的分表算法
                 sharding-algorithm-name: custom-sharding-table

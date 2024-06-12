@@ -11,6 +11,8 @@ public interface UsersMapper {
 
     List<Users> listByIdAndName(@Param("ids") List<Long> ids, @Param("names") List<String> names);
 
+    List<Users> listByIdRange(@Param("min") Integer min, @Param("max") Integer max);
+
     List<Users> pageByIds(@Param("ids") List<Long> ids, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     Users getByIdAndName(@Param("id") Long id, @Param("name") String name);

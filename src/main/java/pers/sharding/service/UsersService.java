@@ -20,6 +20,13 @@ public class UsersService {
     }
 
 
+    public List<Users> listByIdRange(Integer min, Integer max){
+        return usersMapper.listByIdRange(min, max);
+    }
+
+
+
+
 
     public List<Users> pageByIds(List<Long> ids, Integer offset, Integer limit){
         // 测试获取连接死锁问题
