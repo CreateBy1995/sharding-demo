@@ -3,21 +3,30 @@
 # 2.递增id如何保证数据和流量均衡可以参考 https://blog.csdn.net/tianmlin1/article/details/133199048
 spring:
   shardingsphere:
+    datasource:
+      # 定义数据源
+      names: ds0,ds1
     rules:
       sharding:
+        key-generators:
+          custom-key-gen:
+            type: SNOWFLAKE
         sharding-algorithms:
-          custom-sharding-db: # 自定义算法
+          custom-sharding-db: # 自定义分片算法
             props:
               algorithm-expression: ds$->{id % 2}
               allow-range-query-with-inline-sharding: true # 允许范围查询，查询会无视分片策略，进行全路由 默认为false
             type: INLINE
-          custom-sharding-table:  # 自定义算法
+          custom-sharding-table:
             props:
               allow-range-query-with-inline-sharding: true
               algorithm-expression: users_$->{(id >> 1) % 4}
             type: INLINE
         tables:
           users:
+            key-generate-strategy:
+              column: id
+              key-generator-name: custom-key-gen
             actual-data-nodes: ds$->{0..1}.users_$->{0..3}
             database-strategy:
               standard:

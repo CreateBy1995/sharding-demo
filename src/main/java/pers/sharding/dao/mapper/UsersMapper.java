@@ -1,6 +1,7 @@
 package pers.sharding.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import pers.sharding.dao.domain.City;
 import pers.sharding.dao.domain.Users;
 
 import java.util.List;
@@ -18,5 +19,9 @@ public interface UsersMapper {
     Users getByIdAndName(@Param("id") Long id, @Param("name") String name);
 
     Users getById(@Param("id") Long id);
+
+    int create(Users user);
+
+    int batchCreate(@Param("userList") List<Users> userList);
 
 }

@@ -50,4 +50,16 @@
     </select>
 
 
+    <insert id="batchCreate">
+        INSERT INTO users(name) VALUES
+        <foreach collection="userList" separator="," item="item">
+            (#{item.name})
+        </foreach>
+    </insert>
+
+    <insert id="create" parameterType="pers.sharding.dao.domain.Users">
+        INSERT INTO users(name) VALUES (#{name})
+    </insert>
+
+
 </mapper>

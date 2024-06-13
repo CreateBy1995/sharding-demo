@@ -13,6 +13,11 @@ public class Test {
     // 如果某个表没有配置任何规则（分片、主从等），则查询只会走固定某个数据源。
     // 至于要走哪个数据源，则是按照数据源配置的顺序去选择。
     // 例如表user无任何规则，且数据源配置了ds0,ds1，则优先使用ds0，如果ds0不存在表user，则依次后推。
+    // SingleTableRouteEngine#route
 
+    // 广播路由引擎会将写请求打到配置的所有节点
+    // ShardingDatabaseBroadcastRoutingEngine#route
+    // 而如果是读请求与则随机请求某个节点即可
+    // ShardingUnicastRoutingEngine#route
 
 }

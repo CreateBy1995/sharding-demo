@@ -1,12 +1,14 @@
-# 无配置
+# 广播表
 spring:
   shardingsphere:
     datasource:
       # 定义数据源
-      names: ds0
+      names: ds0,ds1
     rules:
       sharding:
         default-database-strategy:
           none:
         default-table-strategy:
           none:
+        broadcast-tables:
+          - city

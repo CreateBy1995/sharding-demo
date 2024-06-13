@@ -13,4 +13,8 @@
 
     </select>
 
+    <insert id="create" parameterType="pers.sharding.dao.domain.City">
+        INSERT INTO city(city_name) VALUES (#{cityName})
+    </insert>
+
 </mapper>

@@ -7,14 +7,6 @@
         SELECT * FROM orders WHERE id = #{id}
     </select>
 
-    <select id="listByIds" resultType="pers.sharding.dao.domain.Order">
-        SELECT * FROM orders WHERE id  in
-        <foreach collection="ids" item="item" separator="," open="(" close=")">
-            #{item}
-        </foreach>
-    </select>
-
-
 
     <insert id="create" parameterType="pers.sharding.dao.domain.Order">
         INSERT INTO orders(user_id) VALUES (#{userId})

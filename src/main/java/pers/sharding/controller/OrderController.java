@@ -12,6 +12,9 @@ import pers.sharding.vo.UsersVO;
 
 import java.util.List;
 
+/**
+ * 无配置规则表测试接口
+ */
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
@@ -21,11 +24,6 @@ public class OrderController {
     @GetMapping("/get/{id}")
     public OrderVO getOrder(@PathVariable Long id) {
         return ReflectionUtil.convert(orderService.getOrder(id), OrderVO.class);
-    }
-
-    @PostMapping("/listByIds")
-    public List<OrderVO> listByIds(@RequestBody OrdersQueryRO ro) {
-        return ReflectionUtil.convertList(orderService.listByIds(ro.getIds()), OrderVO.class);
     }
 
     @PostMapping("/create")

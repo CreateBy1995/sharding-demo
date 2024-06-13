@@ -2,6 +2,7 @@ package pers.sharding.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pers.sharding.ro.UsersCreateRO;
 import pers.sharding.ro.UsersQueryRO;
 import pers.sharding.service.UsersService;
 import pers.sharding.util.ReflectionUtil;
@@ -28,6 +29,16 @@ public class UsersController {
     @GetMapping("/listByIdRange")
     public List<UsersVO> listByIdRange(Integer min, Integer max) {
         return ReflectionUtil.convertList(usersService.listByIdRange(min, max), UsersVO.class);
+    }
+
+    @PostMapping("/create")
+    public Integer create(@RequestBody UsersCreateRO ro) {
+        return usersService.create(ro);
+    }
+
+    @PostMapping("/batchCreate")
+    public Integer batchCreate(@RequestBody List<UsersCreateRO> roList) {
+        return usersService.batchCreate(roList);
     }
 
 

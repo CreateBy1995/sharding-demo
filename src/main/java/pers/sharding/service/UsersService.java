@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.sharding.dao.domain.Users;
 import pers.sharding.dao.mapper.UsersMapper;
+import pers.sharding.ro.UsersCreateRO;
+import pers.sharding.util.ReflectionUtil;
 
 import java.util.List;
 
@@ -24,8 +26,15 @@ public class UsersService {
         return usersMapper.listByIdRange(min, max);
     }
 
+    public Integer create(UsersCreateRO ro){
+        Users users = ReflectionUtil.convert(ro, Users.class);
+        return usersMapper.create(users);
+    }
 
-
+    public Integer batchCreate(List<UsersCreateRO> roList){
+        List<Users> userList = ReflectionUtil.convertList(roList, Users.class);
+        return usersMapper.batchCreate(userList);
+    }
 
 
     public List<Users> pageByIds(List<Long> ids, Integer offset, Integer limit){

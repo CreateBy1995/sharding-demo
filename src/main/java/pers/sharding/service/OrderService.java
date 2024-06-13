@@ -18,10 +18,6 @@ public class OrderService {
         return orderMapper.getById(id);
     }
 
-    public List<Order> listByIds(List<Long> ids) {
-        return orderMapper.listByIds(ids);
-    }
-
     public int create(OrderCreateRO ro) {
         Order order = new Order();
         order.setUserId(ro.getUserId());
