@@ -1,37 +1,17 @@
-# 数据分片配置 绑定表连表查询测试
+# 无配置表的情况下默认查询
+# 如果某个表没有配置任何规则（分片、主从等），则查询只会走固定某个数据源。
+# 至于要走哪个数据源，则是按照数据源配置的顺序去选择。
+# 例如表user无任何规则，且数据源配置了ds0,ds1，则优先使用ds0，如果ds0不存在表user，则依次后推。
 spring:
   shardingsphere:
+    datasource:
+      # 定义数据源
+      names: ds0
     rules:
       sharding:
+        default-database-strategy:
+          none:
+        default-table-strategy:
+          none:
         broadcast-tables:
           - city
-        sharding-algorithms:
-          custom-sharding-db:  # 自定义的分库算法
-            props:
-              algorithm-expression: $->{shardingKey % 2}
-            type: ENHANCE-INLINE # 自定义算法
-          custom-sharding-table: # 自定义的分表算法
-            props:
-              algorithm-expression: $->{shardingKey % 2}
-            type: ENHANCE-INLINE
-        tables:
-          product:
-            actual-data-nodes: ds$->{0..1}.product_$->{0..1} # 可用节点配置
-            database-strategy: # 分库策略
-              standard:
-                sharding-column: id # 分片键
-                sharding-algorithm-name: custom-sharding-db
-            table-strategy:
-              standard:
-                sharding-column: id
-                sharding-algorithm-name: custom-sharding-table
-          product_item:
-            actual-data-nodes: ds$->{0..1}.product_item_$->{0..1}
-            database-strategy:
-              standard:
-                sharding-column: product_id
-                sharding-algorithm-name: custom-sharding-db
-            table-strategy:
-              standard:
-                sharding-column: product_id
-                sharding-algorithm-name: custom-sharding-table
