@@ -1,4 +1,3 @@
-mysqlUrl: 121.40.24.147
 # 数据源基础配置
 spring:
   shardingsphere:
@@ -11,26 +10,26 @@ spring:
       ds0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
+        jdbc-url: jdbc:mysql://${mysql.url}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: ${mysql.username}
+        password: ${mysql.password}
       ds0-slave0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_0_slave?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
+        jdbc-url: jdbc:mysql://${mysql.url}:3306/sharding_0_slave?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: ${mysql.username}
+        password: ${mysql.password}
       ds0-slave1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_0_slave_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
+        jdbc-url: jdbc:mysql://${mysql.url}:3306/sharding_0_slave_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: ${mysql.username}
+        password: ${mysql.password}
       ds1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://${mysqlUrl}:3306/sharding_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
-        username: root
-        password: sunshine
+        jdbc-url: jdbc:mysql://${mysql.url}:3306/sharding_1?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+        username: ${mysql.username}
+        password: ${mysql.password}
 
 

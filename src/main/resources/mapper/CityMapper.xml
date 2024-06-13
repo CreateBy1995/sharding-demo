@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.sharding.dao.mapper.CityMapper">
+
+
+    <select id="listByIds" resultType="pers.sharding.dao.domain.City">
+        SELECT *
+        FROM city
+        WHERE id in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
+</mapper>
