@@ -11,6 +11,23 @@
 
     </select>
 
+    <select id="orderByIds" resultType="pers.sharding.dao.domain.Users">
+        SELECT name FROM users WHERE id  in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        order by id desc
+    </select>
+
+
+    <select id="groupByIds" resultType="pers.sharding.dao.aggr.UsersGroup">
+        SELECT name, count(1) as num  FROM users WHERE id  in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        group by name
+    </select>
+
     <select id="pageByIds" resultType="pers.sharding.dao.domain.Users">
         SELECT * FROM users WHERE id  in
         <foreach collection="ids" item="item" separator="," open="(" close=")">
@@ -57,8 +74,19 @@
         </foreach>
     </insert>
 
+    <insert id="batchCreateWithId">
+        INSERT INTO users(id,name) VALUES
+        <foreach collection="userList" separator="," item="item">
+            (#{item.id},#{item.name})
+        </foreach>
+    </insert>
+
     <insert id="create" parameterType="pers.sharding.dao.domain.Users">
         INSERT INTO users(name) VALUES (#{name})
+    </insert>
+
+    <insert id="createWithId" parameterType="pers.sharding.dao.domain.Users">
+        INSERT INTO users(id,name) VALUES (#{id},#{name})
     </insert>
 
 

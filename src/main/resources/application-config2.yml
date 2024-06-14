@@ -26,7 +26,7 @@ spring:
           users:
             key-generate-strategy:
               column: id
-              key-generator-name: custom-key-gen
+#              key-generator-name: custom-key-gen # 不指定算法会使用默认策略，默认策略为雪花算法。
             actual-data-nodes: ds$->{0..1}.users_$->{0..3}
             database-strategy:
               standard:

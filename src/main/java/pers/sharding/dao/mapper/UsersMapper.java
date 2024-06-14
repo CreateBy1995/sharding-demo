@@ -1,7 +1,7 @@
 package pers.sharding.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import pers.sharding.dao.domain.City;
+import pers.sharding.dao.aggr.UsersGroup;
 import pers.sharding.dao.domain.Users;
 
 import java.util.List;
@@ -9,6 +9,10 @@ import java.util.List;
 public interface UsersMapper {
 
     List<Users> listByIds(@Param("ids") List<Long> ids);
+
+    List<Users> orderByIds(@Param("ids") List<Long> ids);
+
+    List<UsersGroup> groupByIds(@Param("ids") List<Long> ids);
 
     List<Users> listByIdAndName(@Param("ids") List<Long> ids, @Param("names") List<String> names);
 
@@ -22,6 +26,10 @@ public interface UsersMapper {
 
     int create(Users user);
 
+    int createWithId(Users user);
+
     int batchCreate(@Param("userList") List<Users> userList);
+
+    int batchCreateWithId(@Param("userList") List<Users> userList);
 
 }

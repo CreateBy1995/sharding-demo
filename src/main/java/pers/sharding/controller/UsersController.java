@@ -6,6 +6,7 @@ import pers.sharding.ro.UsersCreateRO;
 import pers.sharding.ro.UsersQueryRO;
 import pers.sharding.service.UsersService;
 import pers.sharding.util.ReflectionUtil;
+import pers.sharding.vo.UsersGroupVO;
 import pers.sharding.vo.UsersVO;
 
 import java.util.List;
@@ -19,6 +20,16 @@ public class UsersController {
     @PostMapping("/listByIds")
     public List<UsersVO> listByIds(@RequestBody UsersQueryRO ro) {
         return ReflectionUtil.convertList(usersService.listByIds(ro.getIds()), UsersVO.class);
+    }
+
+    @PostMapping("/orderByIds")
+    public List<UsersVO> orderByIds(@RequestBody UsersQueryRO ro) {
+        return ReflectionUtil.convertList(usersService.orderByIds(ro.getIds()), UsersVO.class);
+    }
+
+    @PostMapping("/groupByIds")
+    public List<UsersGroupVO> groupByIds(@RequestBody UsersQueryRO ro) {
+        return ReflectionUtil.convertList(usersService.groupByIds(ro.getIds()), UsersGroupVO.class);
     }
 
     @PostMapping("/listByIdAndName")

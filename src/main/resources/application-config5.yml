@@ -3,8 +3,6 @@ spring:
   shardingsphere:
     rules:
       sharding:
-        broadcast-tables:
-          - city
         binding-tables: # 绑定表之间的分片规则及真实数据节点需要一致
           - product,product_item
         sharding-algorithms:
