@@ -1,0 +1,34 @@
+# 数据分片配置 自动分片 - 取模分片
+spring:
+  shardingsphere:
+    datasource:
+      # 定义数据源
+      names: ds0,ds1
+    rules:
+      sharding:
+        key-generators:
+          custom-key-gen:
+            type: SNOWFLAKE
+        sharding-algorithms:
+          custom-sharding-db: # 自定义分片算法
+            props:
+              sharding-count: 2
+            type: MOD
+          custom-sharding-table:
+            props:
+              sharding-count: 4
+            type: MOD
+        tables:
+          users:
+            key-generate-strategy:
+              column: id
+#              key-generator-name: custom-key-gen # 不指定算法会使用默认策略，默认策略为雪花算法。
+            actual-data-nodes: ds$->{0..1}.users_$->{0..3}
+            database-strategy:
+              standard:
+                sharding-column: id # 分片键
+                sharding-algorithm-name: custom-sharding-db # 上面定义的算法
+            table-strategy:
+              standard:
+                sharding-column: id
+                sharding-algorithm-name: custom-sharding-table

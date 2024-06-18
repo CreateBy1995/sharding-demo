@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: sharding-base,config2
+    active: sharding-base,config8
 
 mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
