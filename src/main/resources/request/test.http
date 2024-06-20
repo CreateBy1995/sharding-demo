@@ -11,6 +11,34 @@ Content-Type: application/json
 ### 查询
 GET http://localhost:8080/order/get/1
 
+###
+POST http://localhost:8080/users/pageByIds
+Content-Type: application/json
+
+{
+  "ids": [
+    1,2,3,4,5,6,7,8,9,11,13
+  ],
+  "names": [
+    ""
+  ],
+  "offset": 10,
+  "limit": 10
+}
+
+
+
+###
+POST http://localhost:8080/users/groupByIds
+Content-Type: application/json
+
+{
+  "ids": [
+    1,2,3,4,5,6,7,8,9,11,13
+  ]
+
+}
+
 ### 2.广播表测试
 
 POST http://localhost:8080/city/create
@@ -46,3 +74,5 @@ Content-Type: application/json
     "name": "name2"
   }
 ]
+
+

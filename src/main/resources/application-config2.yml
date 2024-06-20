@@ -3,6 +3,8 @@
 # 2.递增id如何保证数据和流量均衡可以参考 https://blog.csdn.net/tianmlin1/article/details/133199048
 spring:
   shardingsphere:
+    props:
+      max-connections-size-per-query: 10
     datasource:
       # 定义数据源
       names: ds0,ds1
