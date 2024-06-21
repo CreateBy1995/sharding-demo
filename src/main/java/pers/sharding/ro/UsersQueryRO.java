@@ -10,4 +10,7 @@ public class UsersQueryRO {
     private List<String> names;
     private Integer offset;
     private Integer limit;
+
+    private Long min;
+    private Long max;
 }

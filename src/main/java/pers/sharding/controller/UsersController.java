@@ -37,9 +37,9 @@ public class UsersController {
         return ReflectionUtil.convertList(usersService.listByIdAndName(ro.getIds(), ro.getNames()), UsersVO.class);
     }
 
-    @GetMapping("/listByIdRange")
-    public List<UsersVO> listByIdRange(Integer min, Integer max) {
-        return ReflectionUtil.convertList(usersService.listByIdRange(min, max), UsersVO.class);
+    @PostMapping("/listByIdRange")
+    public List<UsersVO> listByIdRange(@RequestBody UsersQueryRO ro) {
+        return ReflectionUtil.convertList(usersService.listByIdRange(ro.getMin(), ro.getMax(), ro.getOffset(), ro.getLimit()), UsersVO.class);
     }
 
     @PostMapping("/create")

@@ -55,7 +55,7 @@
         <if test="max!= null">
             and id  <![CDATA[ <= ]]> #{max}
         </if>
-
+        limit #{offset}, #{limit}
     </select>
 
     <select id="getByIdAndName" resultType="pers.sharding.dao.domain.Users">

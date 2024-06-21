@@ -36,8 +36,8 @@ public class UsersService {
     }
 
 
-    public List<Users> listByIdRange(Integer min, Integer max) {
-        return usersMapper.listByIdRange(min, max);
+    public List<Users> listByIdRange(Long min, Long max, Integer offset, Integer limit) {
+        return usersMapper.listByIdRange(min, max, offset, limit);
     }
 
     public Integer create(UsersCreateRO ro) {
