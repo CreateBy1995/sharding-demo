@@ -48,7 +48,7 @@ public class UsersController {
     }
 
     @PostMapping("/batchCreate")
-    public Integer batchCreate(@RequestBody List<UsersCreateRO> roList) {
+    public Integer batchCreate(@RequestBody List<UsersCreateRO> roList){
         return usersService.batchCreate(roList);
     }
 

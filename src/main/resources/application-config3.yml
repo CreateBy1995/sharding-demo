@@ -3,7 +3,7 @@ spring:
   shardingsphere:
     enabled: false
   datasource:
-    url: jdbc:mysql://${mysqlUrl}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
+    url: jdbc:mysql://${mysql.url}:3306/sharding_0?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&characterEncoding=utf8
     username: root
     password: sunshine
 

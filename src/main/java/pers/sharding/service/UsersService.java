@@ -2,6 +2,7 @@ package pers.sharding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pers.sharding.dao.aggr.UsersGroup;
 import pers.sharding.dao.domain.Users;
 import pers.sharding.dao.mapper.UsersMapper;
@@ -50,6 +51,8 @@ public class UsersService {
 
     }
 
+    @Transactional
+//    @ShardingSphereTransactionType(TransactionType.BASE)
     public Integer batchCreate(List<UsersCreateRO> roList) {
         List<Users> userList = ReflectionUtil.convertList(roList, Users.class);
         boolean result = userList.stream().allMatch(item -> Objects.nonNull(item.getId()));
